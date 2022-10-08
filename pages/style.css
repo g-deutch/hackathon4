@@ -1,0 +1,10 @@
+#isAvailable {
+    color: green;
+}
+#notAvailable {
+    color: red;
+}
+#book_images {
+    height: 300px;
+    width: 150px;
+}
