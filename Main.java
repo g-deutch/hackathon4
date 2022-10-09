@@ -69,9 +69,9 @@ public class Main {
 
         out.println("<h2>Locations:</h2>");
         out.println("<ul>");
-        for(int i = 0; i < book.locations.size(); i++) {
-            out.println("<li>" + book.locations.get(i) + "</li>");
-        }
+        out.println("<li> Books In Cincinnati: " + book.booksAtLocation("Cincinnati") + "</li>");
+        out.println("<li> Books in Cleveland: " + book.booksAtLocation("Cleveland") + "</li>");
+        out.println("<li> Books in Columbus: " + book.booksAtLocation("Columbus") + "</li>");
         out.println("</ul>");
         out.println("</html>");
         out.close();

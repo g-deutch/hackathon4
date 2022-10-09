@@ -21,6 +21,15 @@ public class Book {
     boolean isAvailable() {
         return copiesAvailable > 0;
     }
+    int booksAtLocation(String location){
+        int books  = 0;
+        for(int x = 0; x< locations.size();x++){
+            if (locations.get(x).equals(location)){
+                books++;
+            }
+        }
+        return books;
+    }
 
     int copiesAvailable() {
         return copiesAvailable;
