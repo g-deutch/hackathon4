@@ -1,7 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class Main {
@@ -35,7 +38,11 @@ public class Main {
         PrintWriter out = new PrintWriter(new File("pages/checkout" + book.href + ".html"));
         out.println("<h1>Checkout</h1>");
         out.println("<p>" + book.title + "</p>");
-        out.println("<button alert(`Checkedout`) </button>");
+        Calendar date=  Calendar.getInstance();
+        date.setTime(new Date());
+        date.add(Calendar.DATE,14);
+        String time = date.getTime().toString();
+        out.println("<p> Due on: " + time + "<p>");
         out.close();
     }
 
@@ -54,7 +61,6 @@ public class Main {
             out.println("<p id=\"isAvailable\"> available </p>");
             out.println("<button onClick=\"location.href=\'checkout"+ book.href +".html\';\"> Checkout </button>");
         }
-
         out.println("<ul>");
         for(int i = 0; i < book.locations.size(); i++) {
             out.println("<li>" + book.locations.get(i) + "</li>");
