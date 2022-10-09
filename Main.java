@@ -26,12 +26,17 @@ public class Main {
             for(int i = 0; i < books.size(); i++) {
                 printBook(books.get(i), out);
                 bookPages(books.get(i));
+                checkoutBook(books.get(i));
             }
         out.close();
     }
 
-    public static void checkoutBook(Book book){
-        
+    public static void checkoutBook(Book book) throws FileNotFoundException{
+        PrintWriter out = new PrintWriter(new File("pages/checkout" + book.href + ".html"));
+        out.println("<h1>Checkout</h1>");
+        out.println("<p>" + book.title + "</p>");
+        out.println("<button alert(`Checkedout`) </button>");
+        out.close();
     }
 
     public static void bookPages(Book book) throws FileNotFoundException {
@@ -47,7 +52,7 @@ public class Main {
             out.println("<p id=\"notAvailable\"> not available </p>");
         } else {
             out.println("<p id=\"isAvailable\"> available </p>");
-            out.println("<button onclick> Checkout </button>");
+            out.println("<button onClick=\"location.href=\'checkout"+ book.href +".html\';\"> Checkout </button>");
         }
 
         out.println("<ul>");
@@ -62,5 +67,4 @@ public class Main {
     public static void printBook(Book book, PrintWriter out) {
         out.println("<h1><a href=\"" + book.href + ".html\">" + book.title + "</a></h1>");
     }
-
 }
