@@ -1,17 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         LinkedList<Book> books = new LinkedList<Book>();
-        // columbus, cincinnati, cleavland
+        // columbus, cincinnati, cleveland
         books.add(new Book("A Tale of Two Cities", "Historical Fiction", new LinkedList<String>(Arrays.asList("Cincinnati", "Cincinnati", "Cincinnati", "Columbus", "Cleveland"))));
         books.add(new Book("The Hobbit", "Fantasy", new LinkedList<String>(Arrays.asList())));
         books.add(new Book("The Da Vinci Code", "Mystery Thriller", new LinkedList<String>(Arrays.asList("Columbus", "Columbus", "Columbus", "Colombus"))));
@@ -24,25 +21,29 @@ public class Main {
     }
 
     public static void makeIndexPage(LinkedList<Book> books) throws FileNotFoundException {
-        File test = new File("pages/index.html");
-        PrintWriter out = new PrintWriter(test);
+        File index = new File("pages/index.html");
+        PrintWriter out = new PrintWriter(index);
+        out.println("<body style=\"background-color:powderblue\">");
+        out.println("<img src=\"../Images/syntax_terror.png\"style=\"width:64px;height:64px\"></img>");
+
+        out.println("<div style=\"border:5px solid cornflowerblue; background-color:darkturquoise\">");
             for(int i = 0; i < books.size(); i++) {
                 printBook(books.get(i), out);
                 bookPages(books.get(i));
                 checkoutBook(books.get(i));
             }
+            out.println("</div>");
+            orderBook();
         out.close();
     }
 
     public static void checkoutBook(Book book) throws FileNotFoundException{
         PrintWriter out = new PrintWriter(new File("pages/checkout" + book.href + ".html"));
+        out.println("<body style=\"background-color:powderblue\">");
+        out.println("<img src=\"../Images/syntax_terror.png\"style=\"width:64px;height:64px\"></img>");
         out.println("<h1>Checkout</h1>");
         out.println("<p>" + book.title + "</p>");
-        Calendar date=  Calendar.getInstance();
-        date.setTime(new Date());
-        date.add(Calendar.DATE,14);
-        String time = date.getTime().toString();
-        out.println("<p> Due on: " + time + "<p>");
+        out.println("<button onClick=\"location.href=\'orderComplete.html\';\">Check Out</button>");
         out.close();
     }
 
@@ -52,8 +53,11 @@ public class Main {
         out.println("<head>");
         out.println("<link rel=\"stylesheet\" href=\"style.css\">");
         out.println("</head>");
+        out.println("<body style=\"background-color:powderblue\">");
+        out.println("<img src=\"../Images/syntax_terror.png\"style=\"width:64px;height:64px\"></img>");
         out.println("<h1>" + book.title + "</h1>");
         out.println("<img id = \"book_images\"src=\"../Images/" + book.img + ".jpg\"></img>");
+
 
         if(!book.isAvailable()) {
             out.println("<p id=\"notAvailable\"> not available </p>");
@@ -61,6 +65,9 @@ public class Main {
             out.println("<p id=\"isAvailable\"> available </p>");
             out.println("<button onClick=\"location.href=\'checkout"+ book.href +".html\';\"> Checkout </button>");
         }
+        out.println("<button onClick=\"location.href=\'index.html\';\"> Return </button>");
+
+        out.println("<h2>Locations:</h2>");
         out.println("<ul>");
         for(int i = 0; i < book.locations.size(); i++) {
             out.println("<li>" + book.locations.get(i) + "</li>");
@@ -72,5 +79,15 @@ public class Main {
 
     public static void printBook(Book book, PrintWriter out) {
         out.println("<h1><a href=\"" + book.href + ".html\">" + book.title + "</a></h1>");
+    }
+
+    public static void orderBook() throws FileNotFoundException{
+        PrintWriter out = new PrintWriter(new File("pages/orderComplete.html"));
+        out.println("<body style=\"background-color:powderblue\">");
+        out.println("<img src=\"../Images/syntax_terror.png\"style=\"width:64px;height:64px\"></img>");
+        out.println("<h1>Thank you!</h1>");
+        out.print("<p>Your order has been submitted, and a delivery truck will be here soon to send you the book. Shipping may take up to 2-3 business days, </p>");
+        out.println("<button onClick=\"location.href=\'index.html\';\">Start Over</button>");
+        out.close();
     }
 }
